@@ -4,9 +4,31 @@
              x:Class="IT3048C_Final.Views.MainPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+
+            
+
+            <Button Text="Draw Card" 
+                WidthRequest="350"
+                HorizontalOptions="CenterAndExpand"
+                Clicked="DrawButtonClicked"
+                Background="lightGreen"
+                />
+
+            <Button Text="Add to Hand"
+                WidthRequest="350"
+                HorizontalOptions="CenterAndExpand"
+                Clicked="AddButtonClicked"
+                BackgroundColor="LightSkyBlue"
+                Opacity="0.25"
+                />
+            
+            <Button Text="Discard"
+                WidthRequest="350"
+                HorizontalOptions="CenterAndExpand"
+                Clicked="DiscardButtonClicked"
+                BackgroundColor="Red"
+                Opacity="0.25"
+                />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
