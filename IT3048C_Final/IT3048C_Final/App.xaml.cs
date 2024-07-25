@@ -14,9 +14,9 @@ namespace IT3048C_Final
         {
             InitializeComponent();
 
-            DeckAPI = new Deck("https://www.deckofcardsapi.com/api/deck/");
-
             MainPage = new MainPage();
+
+            DeckAPI = new Deck("https://www.deckofcardsapi.com/api/deck/");
         }
 
         protected override void OnStart()
