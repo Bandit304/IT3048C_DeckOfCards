@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IT3048C_Final.DeckAPI.Responses;
+using IT3048C_Final.Models;
 using Newtonsoft.Json;
 
 namespace IT3048C_Final.DeckAPI
@@ -42,10 +44,62 @@ namespace IT3048C_Final.DeckAPI
             return responseObject;
         }
 
+        // Create and shuffle new deck
         public async Task GenerateNewDeckID()
         {
-            NewDeckResponse? response = await GetApiRequest<NewDeckResponse>("new/shuffle/?deck_count=1");
+            // Send request to API to create new deck
+            DeckResponse? response = await GetApiRequest<DeckResponse>("new/shuffle/?deck_count=1");
+            // Save deck id
             DeckID = response?.deck_id;
+        }
+
+        // Get number of cards remaining in deck
+        public async Task<int?> GetNumberOfCardsInDeck()
+        {
+            DeckResponse? response = await GetApiRequest<DeckResponse>($"{DeckID}");
+            return response?.remaining;
+        }
+
+        // Draw card from deck
+        public async Task<Card> DrawCard()
+        {
+            // Send request to API to draw 1 card
+            DrawCardResponse? response = await GetApiRequest<DrawCardResponse>($"{DeckID}/draw/?count=1");
+            // Return drawn card
+            return response?.cards[0];
+        }
+
+        // Shuffle deck
+        public async Task ShuffleDeck() => await GetApiRequest<DeckResponse>($"{DeckID}/shuffle/?remaining=true");
+
+        // Add drawn card to hand
+        public async Task AddCardToHand(string cardCode) =>
+            await GetApiRequest<GenericResponse>($"{DeckID}/pile/userHand/add/?cards={cardCode}");
+
+        public async Task<Card[]> GetCardsInHand()
+        {
+            // Send request to API to list 
+            GetCardsInHandResponse? response = await GetApiRequest<GetCardsInHandResponse>($"{DeckID}/pile/userHand/list/");
+            // Return list of cards in hand
+            return response?.piles.userHand.cards;
+        }
+
+        // Discard drawn card
+        public async Task DiscardCard(string cardCode)
+        {
+            // Return card to deck
+            await GetApiRequest<DeckResponse>($"{DeckID}/return/?cards={cardCode}");
+            // Shuffle deck
+            await ShuffleDeck();
+        }
+
+        // Discard card from hand
+        public async Task DiscardCardFromHand(string cardCode)
+        {
+            // Return card to deck
+            await GetApiRequest<DeckResponse>($"{DeckID}/pile/userHand/return/?cards={cardCode}");
+            // Shuffle deck
+            await ShuffleDeck();
         }
     }
 }
