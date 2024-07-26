@@ -4,34 +4,82 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IT3048C_Final.Views.MainPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="10">
 
-            <Image Source="https://www.deckofcardsapi.com/static/img/back.png"
-                WidthRequest="350"
-                HeightRequest="350"
-                HorizontalOptions="CenterAndExpand"
-                   Margin="50"
-                />
+            <FlexLayout JustifyContent="SpaceEvenly"
+                        AlignContent="Center">
+
+                <Image Source="https://www.deckofcardsapi.com/static/img/back.png"
+                       WidthRequest="100"/>
+
+                <StackLayout VerticalOptions="Center">
+
+                    <Label Text="Cards Remaining In Deck:"
+                           FontSize="Large"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="{Binding CardsInDeck}"
+                           FontSize="Large"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"/>
+
+                </StackLayout>
+
+            </FlexLayout>
 
             <Button Text="Draw Card" 
+                Command="{Binding DrawCard}"
                 WidthRequest="350"
                 HorizontalOptions="CenterAndExpand"
                 Background="lightGreen"
                 />
 
             <Button Text="Add to Hand"
+                Command="{Binding AddCardToHand}"
                 WidthRequest="350"
                 HorizontalOptions="CenterAndExpand"
                 BackgroundColor="LightSkyBlue"
-                Opacity="0.25"
+                IsEnabled="{Binding EnableCardButtons}"
                 />
-            
+
             <Button Text="Discard"
+                Command="{Binding DiscardCard}"
                 WidthRequest="350"
                 HorizontalOptions="CenterAndExpand"
                 BackgroundColor="Red"
-                Opacity="0.25"
+                IsEnabled="{Binding EnableCardButtons}"
                 />
+
+            <Label Text="Cards in Hand:"
+                   FontSize="Large"/>
+
+            <CollectionView ItemsSource="{Binding Hand}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <FlexLayout JustifyContent="SpaceEvenly"
+                                    AlignContent="Center"
+                                    Padding="10">
+
+                            <Image Source="{Binding image}"
+                                   WidthRequest="100"/>
+
+                            <StackLayout>
+
+                                <Label Text="{Binding value}"/>
+                                <Label Text="{Binding suit}"/>
+
+                                <Button Text="Discard"
+                                        Command="{Binding DiscardCardFromHand}"
+                                        CommandParameter="{Binding code}"
+                                        BackgroundColor="Red"
+                                        HorizontalOptions="Fill"/>
+
+                            </StackLayout>
+
+                        </FlexLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
         </StackLayout>
             
             
