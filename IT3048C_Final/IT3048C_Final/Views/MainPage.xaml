@@ -1,11 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IT3048C_Final.Views.MainPage">
     <ContentPage.Content>
         <StackLayout>
 
-            
+            <Image Source="https://www.deckofcardsapi.com/static/img/back.png"
+                WidthRequest="350"
+                HeightRequest="350"
+                HorizontalOptions="CenterAndExpand"
+                   Margin="50"
+                />
 
             <Button Text="Draw Card" 
                 WidthRequest="350"
@@ -27,5 +33,7 @@
                 Opacity="0.25"
                 />
         </StackLayout>
+            
+            
     </ContentPage.Content>
 </ContentPage>
