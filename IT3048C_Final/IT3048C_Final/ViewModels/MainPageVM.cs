@@ -146,7 +146,6 @@ namespace IT3048C_Final.ViewModels
                 await App.DeckAPI.AddCardToHand(DrawnCard.code);
                 Hand.Add(DrawnCard); // Add the drawn card to the hand
                 DrawnCard = null; // Clear the drawn card
-                EnableCardButtons = false; // Disable buttons if needed
                 // Update deck count
                 await UpdateDeckCount();
             }
@@ -164,7 +163,6 @@ namespace IT3048C_Final.ViewModels
             {
                 await App.DeckAPI.DiscardCard(DrawnCard.code); // Discard the drawn card
                 DrawnCard = null; // Clear the drawn card
-                EnableCardButtons = false; // Disable buttons if needed
                 // Update deck count
                 await UpdateDeckCount();
             }
