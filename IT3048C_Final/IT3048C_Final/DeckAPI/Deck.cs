@@ -29,10 +29,10 @@ namespace IT3048C_Final.DeckAPI
             Task.Run(GenerateNewDeckID).Wait();
         }
 
-        public async Task<ResponseType?> GetApiRequest<ResponseType>(string path) where ResponseType : struct
+        public async Task<ResponseType> GetApiRequest<ResponseType>(string path) where ResponseType : GenericResponse
         {
             // Define output variable
-            ResponseType? responseObject = null;
+            ResponseType responseObject = null;
             // Send GET request to API
             HttpResponseMessage response = await _httpClient.GetAsync($"{ApiUrl}{path}");
             if (response != null && response.IsSuccessStatusCode)
@@ -49,23 +49,23 @@ namespace IT3048C_Final.DeckAPI
         public async Task GenerateNewDeckID()
         {
             // Send request to API to create new deck
-            DeckResponse? response = await GetApiRequest<DeckResponse>("new/shuffle/?deck_count=1");
+            DeckResponse response = await GetApiRequest<DeckResponse>("new/shuffle/?deck_count=1");
             // Save deck id
             DeckID = response?.deck_id;
         }
 
         // Get number of cards remaining in deck
-        public async Task<int?> GetNumberOfCardsInDeck()
+        public async Task<int> GetNumberOfCardsInDeck()
         {
-            DeckResponse? response = await GetApiRequest<DeckResponse>($"{DeckID}");
-            return response?.remaining;
+            DeckResponse response = await GetApiRequest<DeckResponse>($"{DeckID}");
+            return response?.remaining ?? 0;
         }
 
         // Draw card from deck
         public async Task<Card> DrawCard()
         {
             // Send request to API to draw 1 card
-            DrawCardResponse? response = await GetApiRequest<DrawCardResponse>($"{DeckID}/draw/?count=1");
+            DrawCardResponse response = await GetApiRequest<DrawCardResponse>($"{DeckID}/draw/?count=1");
             // Return drawn card
             return response?.cards[0];
         }
@@ -80,7 +80,7 @@ namespace IT3048C_Final.DeckAPI
         public async Task<Card[]> GetCardsInHand()
         {
             // Send request to API to list 
-            GetCardsInHandResponse? response = await GetApiRequest<GetCardsInHandResponse>($"{DeckID}/pile/userHand/list/");
+            GetCardsInHandResponse response = await GetApiRequest<GetCardsInHandResponse>($"{DeckID}/pile/userHand/list/");
             // Return list of cards in hand
             return response?.piles.userHand.cards;
         }

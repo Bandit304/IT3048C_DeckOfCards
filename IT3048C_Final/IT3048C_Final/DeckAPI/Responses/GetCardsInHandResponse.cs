@@ -3,11 +3,8 @@ using System;
 
 namespace IT3048C_Final.DeckAPI.Responses
 {
-    public struct GetCardsInHandResponse
+    public class GetCardsInHandResponse : GenericResponse
     {
-        public bool success;
-        public string deck_id;
-        public int remaining;
         public PileList piles;
 
         public struct Pile
