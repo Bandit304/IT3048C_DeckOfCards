@@ -8,7 +8,7 @@ namespace IT3048C_Final.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        public MainPageVM ViewModel;
+        public MainPageVM ViewModel { get; set; }
 
         public MainPage()
         {

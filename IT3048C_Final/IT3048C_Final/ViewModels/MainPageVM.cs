@@ -72,6 +72,9 @@ namespace IT3048C_Final.ViewModels
 
         public MainPageVM()
         {
+            // Initialize ObservableCollections
+            Hand = new ObservableCollection<Card>();
+
             // Initialize Commands
             DrawCard = new Command(OnDrawCard);
             AddCardToHand = new Command(OnAddCardToHand);
@@ -106,6 +109,17 @@ namespace IT3048C_Final.ViewModels
             // Fetch the number of cards in the deck
             int? deckCount = await App.DeckAPI.GetNumberOfCardsInDeck();
             CardsInDeck = deckCount ?? 0; // Use 0 if deckCount is null
+        }
+
+        private async Task UpdateHand()
+        {
+            Card[] cards = await App.DeckAPI.GetCardsInHand();
+            if (cards != null)
+            {
+                Hand.Clear();
+                foreach (Card card in cards)
+                    Hand.Add(card);
+            }
         }
 
 
@@ -144,7 +158,7 @@ namespace IT3048C_Final.ViewModels
             {
                 // Send request to add card to hand in API
                 await App.DeckAPI.AddCardToHand(DrawnCard.code);
-                Hand.Add(DrawnCard); // Add the drawn card to the hand
+                await UpdateHand();
                 DrawnCard = null; // Clear the drawn card
                 // Update deck count
                 await UpdateDeckCount();
