@@ -25,7 +25,8 @@ namespace IT3048C_Final.DeckAPI
             // Generate new HttpClient
             _httpClient = new HttpClient();
             // Generate new Deck, save Deck ID
-            GenerateNewDeckID();
+            // Use Task.Run(...).Wait() since constructor's not an async function
+            Task.Run(GenerateNewDeckID).Wait();
         }
 
         public async Task<ResponseType?> GetApiRequest<ResponseType>(string path) where ResponseType : struct

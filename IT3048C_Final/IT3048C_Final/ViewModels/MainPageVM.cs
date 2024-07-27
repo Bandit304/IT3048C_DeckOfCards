@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace IT3048C_Final.ViewModels
 {
@@ -41,11 +42,12 @@ namespace IT3048C_Final.ViewModels
             DiscardCardFromHand = new Command(cardCode => OnDiscardCardFromHand(cardCode as string));
 
             // Get initial API data
-            InitializeAsync();
+            // Use Task.Run(...).Wait() since constructor's not an async function
+            Task.Run(InitializeAsync).Wait();
         }
 
         // For getting initial data from API
-        private async void InitializeAsync()
+        private async Task InitializeAsync()
         {
             try
             {
@@ -61,8 +63,6 @@ namespace IT3048C_Final.ViewModels
         }
 
 
-
-
         // ===== COMMAND CALLBACKS =====
 
 
@@ -71,11 +71,12 @@ namespace IT3048C_Final.ViewModels
         {
             try
             {
-                // Ensure DrawCardAsync is returning Task<Card>
-                Card card = await App.DeckAPI.DrawCard();
-                if (card != null)
+                // If there are cards in deck AND there's currently no card drawn, draw new card
+                if (CardsInDeck > 0 && DrawnCard == null)
                 {
-                    DrawnCard = card;
+                    // Draw new card
+                    DrawnCard = await App.DeckAPI.DrawCard();
+                    // Update deck count
                     int? deckCount = await App.DeckAPI.GetNumberOfCardsInDeck();
                     CardsInDeck = deckCount ?? 0;
                 }
