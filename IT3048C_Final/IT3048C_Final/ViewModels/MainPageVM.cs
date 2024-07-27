@@ -4,25 +4,58 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace IT3048C_Final.ViewModels
 {
-    public class MainPageVM
+    public class MainPageVM : INotifyPropertyChanged
     {
+        // ===== INotifyPropertyChanged Fields =====
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        // ===== Fields =====
+
+
         // Unbindable Fields
+        private ObservableCollection<Card> _hand;
+        private int _cardsInDeck;
         private Card _card;
 
         // Bindable Fields
-        public ObservableCollection<Card> Hand { get; set; }
-        public int CardsInDeck { get; set; }
+        public ObservableCollection<Card> Hand
+        {
+            get => _hand;
+            private set
+            {
+                _hand = value;
+                // Update UI
+                OnPropertyChanged(nameof(Hand));
+            }
+        }
+        public int CardsInDeck
+        {
+            get => _cardsInDeck;
+            private set
+            {
+                _cardsInDeck = value;
+                // Update UI
+                OnPropertyChanged(nameof(CardsInDeck));
+            }
+        }
         public Card DrawnCard
         {
             get => _card;
-            set
+            private set
             {
                 _card = value;
                 // If card is not null, enable buttons
                 EnableCardButtons = value != null;
+                // Tell UI to update
+                OnPropertyChanged(nameof(DrawnCard));
+                OnPropertyChanged(nameof(EnableCardButtons));
             }
         }
         public bool EnableCardButtons { get; private set; }
@@ -32,6 +65,10 @@ namespace IT3048C_Final.ViewModels
         public Command AddCardToHand { get; private set; }
         public Command DiscardCard { get; private set; }
         public Command DiscardCardFromHand { get; private set; }
+
+
+        // ===== Constructor =====
+
 
         public MainPageVM()
         {
@@ -45,6 +82,10 @@ namespace IT3048C_Final.ViewModels
             // Use Task.Run(...).Wait() since constructor's not an async function
             Task.Run(InitializeAsync).Wait();
         }
+
+
+        // ===== Methods =====
+
 
         // For getting initial data from API
         private async Task InitializeAsync()
@@ -90,9 +131,6 @@ namespace IT3048C_Final.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Error", $"Failed to draw card: {ex.Message}", "OK");
             }
         }
-
-
-
 
 
         // Handles pressing the "Add to Hand" button
@@ -148,6 +186,14 @@ namespace IT3048C_Final.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Warning", "Card not found in hand.", "OK");
             }
         }
+
+
+        // ===== INotifyPropertyChanged Methods =====
+
+
+        // Method to call when updating a value to tell the UI to update
+        private void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
     }
 }
