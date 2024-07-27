@@ -1,5 +1,6 @@
 ﻿using IT3048C_Final.Models;
 using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
@@ -43,7 +44,7 @@ namespace IT3048C_Final.ViewModels
             InitializeAsync();
         }
 
-                // For getting initial data from API
+        // For getting initial data from API
         private async void InitializeAsync()
         {
             try
@@ -71,7 +72,7 @@ namespace IT3048C_Final.ViewModels
             try
             {
                 // Ensure DrawCardAsync is returning Task<Card>
-                Card card = await App.DeckAPI.DrawCardAsync();
+                Card card = await App.DeckAPI.DrawCard();
                 if (card != null)
                 {
                     DrawnCard = card;
@@ -98,6 +99,8 @@ namespace IT3048C_Final.ViewModels
         {
             if (DrawnCard != null)
             {
+                // Send request to add card to hand in API
+                await App.DeckAPI.AddCardToHand(DrawnCard.code);
                 Hand.Add(DrawnCard); // Add the drawn card to the hand
                 DrawnCard = null; // Clear the drawn card
                 EnableCardButtons = false; // Disable buttons if needed
@@ -114,7 +117,7 @@ namespace IT3048C_Final.ViewModels
         {
             if (DrawnCard != null)
             {
-                // Discard the drawn card (could also involve an API call if required)
+                await App.DeckAPI.DiscardCard(DrawnCard.code); // Discard the drawn card
                 DrawnCard = null; // Clear the drawn card
                 EnableCardButtons = false; // Disable buttons if needed
             }
@@ -130,9 +133,11 @@ namespace IT3048C_Final.ViewModels
         {
             if (string.IsNullOrEmpty(cardCode)) return;
 
-            var cardToDiscard = Hand.FirstOrDefault(c => c.code == cardCode);
+            Card cardToDiscard = Hand.FirstOrDefault(c => c.code == cardCode);
             if (cardToDiscard != null)
             {
+                // Send request to API to discard card from hand
+                await App.DeckAPI.DiscardCardFromHand(cardCode);
                 Hand.Remove(cardToDiscard); // Remove the card from hand
                 int? deckCount = await App.DeckAPI.GetNumberOfCardsInDeck();
                 CardsInDeck = deckCount ?? 0; // Use 0 if deckCount is null
