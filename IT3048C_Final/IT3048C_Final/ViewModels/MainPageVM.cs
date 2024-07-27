@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using static System.Net.WebRequestMethods;
 
 namespace IT3048C_Final.ViewModels
 {
@@ -23,6 +24,7 @@ namespace IT3048C_Final.ViewModels
         private ObservableCollection<Card> _hand;
         private int _cardsInDeck;
         private Card _card;
+        private string _drawnCardImage;
 
         // Bindable Fields
         public ObservableCollection<Card> Hand
@@ -84,11 +86,35 @@ namespace IT3048C_Final.ViewModels
             // Get initial API data
             // Use Task.Run(...).Wait() since constructor's not an async function
             Task.Run(InitializeAsync).Wait();
+
+            //setting the drawn card image to the back of the card
+            DrawnCardImage = "";
+            
         }
 
 
         // ===== Methods =====
 
+
+        // For Displaying the Drawn Card Image
+        public string DrawnCardImage
+        {
+            //get { return "https://www.deckofcardsapi.com/static/img/back.png";  }
+            get => _drawnCardImage;
+
+            set {
+                if (value == "")
+                {
+                    _drawnCardImage = "https://www.deckofcardsapi.com/static/img/back.png";
+                }
+                else
+                {
+                    _drawnCardImage = value;
+                }
+                OnPropertyChanged(nameof(DrawnCardImage)); }
+
+
+        }
 
         // For getting initial data from API
         private async Task InitializeAsync()
@@ -137,6 +163,9 @@ namespace IT3048C_Final.ViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Warning", "No card was drawn.", "OK");
                 }
+
+                // Update the drawn card image
+                DrawnCardImage = DrawnCard.image;
             }
             catch (Exception ex)
             {
@@ -161,6 +190,8 @@ namespace IT3048C_Final.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Warning", "No card drawn to add to hand.", "OK");
             }
+            // Reset the drawn card image to the card back
+            DrawnCardImage = ""; 
         }
 
 
@@ -178,6 +209,9 @@ namespace IT3048C_Final.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Warning", "No card to discard.", "OK");
             }
+
+            // Reset the drawn card image to the card back
+            DrawnCardImage = "";
         }
 
 
