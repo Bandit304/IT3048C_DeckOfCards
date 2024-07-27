@@ -190,14 +190,11 @@ namespace IT3048C_Final.ViewModels
         // Handles pressing the "Discard" buttons in the hand list
         public async void OnDiscardCardFromHand(string cardCode)
         {
-            if (string.IsNullOrEmpty(cardCode)) return;
-
-            Card cardToDiscard = Hand.FirstOrDefault(c => c.code == cardCode);
-            if (cardToDiscard != null)
+            if (cardCode != null)
             {
                 // Send request to API to discard card from hand
                 await App.DeckAPI.DiscardCardFromHand(cardCode);
-                Hand.Remove(cardToDiscard); // Remove the card from hand
+                await UpdateHand(); // Update Hand UI
                 // Update deck count
                 await UpdateDeckCount();
             }
