@@ -95,20 +95,14 @@ namespace IT3048C_Final.ViewModels
         {
             try
             {
-                await UpdateDeckCount();
+                // Fetch the number of cards in the deck
+                CardsInDeck = await App.DeckAPI.GetNumberOfCardsInDeck();
             }
             catch (Exception ex)
             {
                 // Handle potential exceptions
                 await Application.Current.MainPage.DisplayAlert("Error", $"Failed to initialize deck count: {ex.Message}", "OK");
             }
-        }
-
-        private async Task UpdateDeckCount()
-        {
-            // Fetch the number of cards in the deck
-            int? deckCount = await App.DeckAPI.GetNumberOfCardsInDeck();
-            CardsInDeck = deckCount ?? 0; // Use 0 if deckCount is null
         }
 
         private async Task UpdateHand()
@@ -137,7 +131,7 @@ namespace IT3048C_Final.ViewModels
                     // Draw new card
                     DrawnCard = await App.DeckAPI.DrawCard();
                     // Update deck count
-                    await UpdateDeckCount();
+                    CardsInDeck = await App.DeckAPI.GetNumberOfCardsInDeck();
                 }
                 else
                 {
@@ -161,7 +155,7 @@ namespace IT3048C_Final.ViewModels
                 await UpdateHand();
                 DrawnCard = null; // Clear the drawn card
                 // Update deck count
-                await UpdateDeckCount();
+                CardsInDeck = await App.DeckAPI.GetNumberOfCardsInDeck();
             }
             else
             {
@@ -178,7 +172,7 @@ namespace IT3048C_Final.ViewModels
                 await App.DeckAPI.DiscardCard(DrawnCard.code); // Discard the drawn card
                 DrawnCard = null; // Clear the drawn card
                 // Update deck count
-                await UpdateDeckCount();
+                CardsInDeck = await App.DeckAPI.GetNumberOfCardsInDeck();
             }
             else
             {
@@ -196,7 +190,7 @@ namespace IT3048C_Final.ViewModels
                 await App.DeckAPI.DiscardCardFromHand(cardCode);
                 await UpdateHand(); // Update Hand UI
                 // Update deck count
-                await UpdateDeckCount();
+                CardsInDeck = await App.DeckAPI.GetNumberOfCardsInDeck();
             }
             else
             {

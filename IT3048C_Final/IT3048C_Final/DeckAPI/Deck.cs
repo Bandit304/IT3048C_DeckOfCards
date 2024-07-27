@@ -55,7 +55,7 @@ namespace IT3048C_Final.DeckAPI
         }
 
         // Get number of cards remaining in deck
-        public async Task<int?> GetNumberOfCardsInDeck()
+        public async Task<int> GetNumberOfCardsInDeck()
         {
             DeckResponse response = await GetApiRequest<DeckResponse>($"{DeckID}");
             return response?.remaining ?? 0;
