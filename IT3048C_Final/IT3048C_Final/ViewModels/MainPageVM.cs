@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using static System.Net.WebRequestMethods;
 
 namespace IT3048C_Final.ViewModels
 {
@@ -51,14 +52,24 @@ namespace IT3048C_Final.ViewModels
             private set
             {
                 _card = value;
-                // If card is not null, enable buttons
-                EnableCardButtons = value != null;
                 // Tell UI to update
                 OnPropertyChanged(nameof(DrawnCard));
                 OnPropertyChanged(nameof(EnableCardButtons));
+                OnPropertyChanged(nameof(DrawnCardImage));
             }
         }
-        public bool EnableCardButtons { get; private set; }
+        // For Displaying the Drawn Card Image
+        public string DrawnCardImage
+        {
+            get
+            {
+                if (DrawnCard != null)
+                    return DrawnCard.image;
+                else
+                    return "https://www.deckofcardsapi.com/static/img/back.png";
+            }
+        }
+        public bool EnableCardButtons { get => DrawnCard != null; }
 
         // Bindable Commands
         public Command DrawCard { get; private set; }

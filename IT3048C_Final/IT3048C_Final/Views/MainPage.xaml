@@ -9,8 +9,9 @@
 
             <FlexLayout JustifyContent="SpaceEvenly"
                         AlignContent="Center">
+   
 
-                <Image Source="https://www.deckofcardsapi.com/static/img/back.png"
+                <Image Source="{Binding DrawnCardImage}"
                        WidthRequest="100"/>
 
                 <StackLayout VerticalOptions="Center">
