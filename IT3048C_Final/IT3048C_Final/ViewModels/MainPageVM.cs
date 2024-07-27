@@ -24,7 +24,6 @@ namespace IT3048C_Final.ViewModels
         private ObservableCollection<Card> _hand;
         private int _cardsInDeck;
         private Card _card;
-        private string _drawnCardImage;
 
         // Bindable Fields
         public ObservableCollection<Card> Hand
@@ -53,35 +52,24 @@ namespace IT3048C_Final.ViewModels
             private set
             {
                 _card = value;
-                // If card is not null, enable buttons
-                EnableCardButtons = value != null;
                 // Tell UI to update
                 OnPropertyChanged(nameof(DrawnCard));
                 OnPropertyChanged(nameof(EnableCardButtons));
+                OnPropertyChanged(nameof(DrawnCardImage));
             }
         }
         // For Displaying the Drawn Card Image
         public string DrawnCardImage
         {
-            //get { return "https://www.deckofcardsapi.com/static/img/back.png";  }
-            get => _drawnCardImage;
-
-            set
+            get
             {
-                if (value == "")
-                {
-                    _drawnCardImage = "https://www.deckofcardsapi.com/static/img/back.png";
-                }
+                if (DrawnCard != null)
+                    return DrawnCard.image;
                 else
-                {
-                    _drawnCardImage = value;
-                }
-                OnPropertyChanged(nameof(DrawnCardImage));
+                    return "https://www.deckofcardsapi.com/static/img/back.png";
             }
-
-
         }
-        public bool EnableCardButtons { get; private set; }
+        public bool EnableCardButtons { get => DrawnCard != null; }
 
         // Bindable Commands
         public Command DrawCard { get; private set; }
@@ -107,10 +95,6 @@ namespace IT3048C_Final.ViewModels
             // Get initial API data
             // Use Task.Run(...).Wait() since constructor's not an async function
             Task.Run(InitializeAsync).Wait();
-
-            //setting the drawn card image to the back of the card
-            DrawnCardImage = "";
-            
         }
 
 
@@ -164,9 +148,6 @@ namespace IT3048C_Final.ViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Warning", "No card was drawn.", "OK");
                 }
-
-                // Update the drawn card image
-                DrawnCardImage = DrawnCard.image;
             }
             catch (Exception ex)
             {
@@ -191,8 +172,6 @@ namespace IT3048C_Final.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Warning", "No card drawn to add to hand.", "OK");
             }
-            // Reset the drawn card image to the card back
-            DrawnCardImage = ""; 
         }
 
 
@@ -210,9 +189,6 @@ namespace IT3048C_Final.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Warning", "No card to discard.", "OK");
             }
-
-            // Reset the drawn card image to the card back
-            DrawnCardImage = "";
         }
 
 
