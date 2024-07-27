@@ -2,7 +2,8 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="IT3048C_Final.Views.MainPage">
+             x:Class="IT3048C_Final.Views.MainPage"
+             x:Name="Page">
     <ContentPage.Content>
         <StackLayout Padding="10">
 
@@ -62,13 +63,13 @@
                             <Image Source="{Binding image}"
                                    WidthRequest="100"/>
 
-                            <StackLayout>
+                            <StackLayout WidthRequest="100">
 
                                 <Label Text="{Binding value}"/>
                                 <Label Text="{Binding suit}"/>
 
                                 <Button Text="Discard"
-                                        Command="{Binding DiscardCardFromHand}"
+                                        Command="{Binding BindingContext.DiscardCardFromHand, Source={x:Reference Page}}"
                                         CommandParameter="{Binding code}"
                                         BackgroundColor="Red"
                                         HorizontalOptions="Fill"/>
