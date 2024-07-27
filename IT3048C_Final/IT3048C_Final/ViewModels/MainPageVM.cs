@@ -60,6 +60,27 @@ namespace IT3048C_Final.ViewModels
                 OnPropertyChanged(nameof(EnableCardButtons));
             }
         }
+        // For Displaying the Drawn Card Image
+        public string DrawnCardImage
+        {
+            //get { return "https://www.deckofcardsapi.com/static/img/back.png";  }
+            get => _drawnCardImage;
+
+            set
+            {
+                if (value == "")
+                {
+                    _drawnCardImage = "https://www.deckofcardsapi.com/static/img/back.png";
+                }
+                else
+                {
+                    _drawnCardImage = value;
+                }
+                OnPropertyChanged(nameof(DrawnCardImage));
+            }
+
+
+        }
         public bool EnableCardButtons { get; private set; }
 
         // Bindable Commands
@@ -95,26 +116,6 @@ namespace IT3048C_Final.ViewModels
 
         // ===== Methods =====
 
-
-        // For Displaying the Drawn Card Image
-        public string DrawnCardImage
-        {
-            //get { return "https://www.deckofcardsapi.com/static/img/back.png";  }
-            get => _drawnCardImage;
-
-            set {
-                if (value == "")
-                {
-                    _drawnCardImage = "https://www.deckofcardsapi.com/static/img/back.png";
-                }
-                else
-                {
-                    _drawnCardImage = value;
-                }
-                OnPropertyChanged(nameof(DrawnCardImage)); }
-
-
-        }
 
         // For getting initial data from API
         private async Task InitializeAsync()
