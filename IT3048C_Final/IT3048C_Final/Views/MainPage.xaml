@@ -30,19 +30,22 @@
             <Button Text="Draw Card" 
                 Command="{Binding DrawCard}"
                 HorizontalOptions="CenterAndExpand"
-                Style="{StaticResource AnimatedButtonStyle}"/>
+                Style="{StaticResource AnimatedButtonStyle}"
+                Background="lightGreen"/>
 
             <Button Text="Add to Hand"
                 Command="{Binding AddCardToHand}"
                 HorizontalOptions="CenterAndExpand"
                 IsEnabled="{Binding EnableCardButtons}"
-                Style="{StaticResource AnimatedButtonStyle}"/>
+                Style="{StaticResource AnimatedButtonStyle}"
+                BackgroundColor="LightSkyBlue"/>
 
             <Button Text="Discard"
                 Command="{Binding DiscardCard}"
                 HorizontalOptions="CenterAndExpand"
                 IsEnabled="{Binding EnableCardButtons}"
-                Style="{StaticResource AnimatedButtonStyle}"/>
+                Style="{StaticResource AnimatedButtonStyle}"
+                BackgroundColor="Red"/>
 
             <Label Text="Cards in Hand:"
                    FontSize="Large"/>
