@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -9,7 +9,6 @@
 
             <FlexLayout JustifyContent="SpaceEvenly"
                         AlignContent="Center">
-   
 
                 <Image Source="{Binding DrawnCardImage}"
                        WidthRequest="100"/>
@@ -30,26 +29,23 @@
 
             <Button Text="Draw Card" 
                 Command="{Binding DrawCard}"
-                WidthRequest="350"
                 HorizontalOptions="CenterAndExpand"
-                Background="lightGreen"
-                />
+                Style="{StaticResource AnimatedButtonStyle}"
+                Background="lightGreen"/>
 
             <Button Text="Add to Hand"
                 Command="{Binding AddCardToHand}"
-                WidthRequest="350"
                 HorizontalOptions="CenterAndExpand"
-                BackgroundColor="LightSkyBlue"
                 IsEnabled="{Binding EnableCardButtons}"
-                />
+                Style="{StaticResource AnimatedButtonStyle}"
+                BackgroundColor="LightSkyBlue"/>
 
             <Button Text="Discard"
                 Command="{Binding DiscardCard}"
-                WidthRequest="350"
                 HorizontalOptions="CenterAndExpand"
-                BackgroundColor="Red"
                 IsEnabled="{Binding EnableCardButtons}"
-                />
+                Style="{StaticResource AnimatedButtonStyle}"
+                BackgroundColor="Red"/>
 
             <Label Text="Cards in Hand:"
                    FontSize="Large"/>
@@ -73,7 +69,8 @@
                                         Command="{Binding BindingContext.DiscardCardFromHand, Source={x:Reference Page}}"
                                         CommandParameter="{Binding code}"
                                         BackgroundColor="Red"
-                                        HorizontalOptions="Fill"/>
+                                        HorizontalOptions="Fill"
+                                        Style="{StaticResource AnimatedButtonStyle}"/>
 
                             </StackLayout>
 
@@ -81,9 +78,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            
+
         </StackLayout>
-            
-            
     </ContentPage.Content>
 </ContentPage>
