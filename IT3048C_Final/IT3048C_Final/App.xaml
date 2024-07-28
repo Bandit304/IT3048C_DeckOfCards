@@ -12,24 +12,26 @@
             <Setter Property="WidthRequest" Value="350" />
             <Setter Property="CornerRadius" Value="10" />
             <Setter Property="Padding" Value="10" />
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup Name="CommonStates">
-                    <VisualState Name="Normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="LightGray" />
-                            <Setter Property="Scale" Value="1" />
-                            <Setter Property="TextColor" Value="Black" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState Name="Pressed">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="Gray" />
-                            <Setter Property="Scale" Value="1.1" />
-                            <Setter Property="TextColor" Value="White" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <Setter.Value>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightGray" />
+                                <Setter Property="Scale" Value="1" />
+                                <Setter Property="TextColor" Value="Black" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Gray" />
+                                <Setter Property="Scale" Value="1.1" />
+                                <Setter Property="TextColor" Value="White" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Application.Resources>
 </Application>
