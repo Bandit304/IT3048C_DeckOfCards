@@ -30,6 +30,7 @@
             <Button Text="Draw Card" 
                 Command="{Binding DrawCard}"
                 HorizontalOptions="CenterAndExpand"
+                IsEnabled="{Binding EnableDrawCardButton}"
                 Style="{StaticResource AnimatedButtonStyle}"
                 Background="lightGreen"/>
 

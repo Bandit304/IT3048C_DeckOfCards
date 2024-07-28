@@ -44,6 +44,7 @@ namespace IT3048C_Final.ViewModels
                 _cardsInDeck = value;
                 // Update UI
                 OnPropertyChanged(nameof(CardsInDeck));
+                OnPropertyChanged(nameof(EnableDrawCardButton));
             }
         }
         public Card DrawnCard
@@ -55,6 +56,7 @@ namespace IT3048C_Final.ViewModels
                 // Tell UI to update
                 OnPropertyChanged(nameof(DrawnCard));
                 OnPropertyChanged(nameof(EnableCardButtons));
+                OnPropertyChanged(nameof(EnableDrawCardButton));
                 OnPropertyChanged(nameof(DrawnCardImage));
             }
         }
@@ -70,6 +72,7 @@ namespace IT3048C_Final.ViewModels
             }
         }
         public bool EnableCardButtons { get => DrawnCard != null; }
+        public bool EnableDrawCardButton { get => DrawnCard == null && CardsInDeck > 0; }
 
         // Bindable Commands
         public Command DrawCard { get; private set; }
