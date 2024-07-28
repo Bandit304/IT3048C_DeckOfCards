@@ -29,20 +29,74 @@
 
             <Button Text="Draw Card" 
                 Command="{Binding DrawCard}"
+                WidthRequest="350"
                 HorizontalOptions="CenterAndExpand"
-                Style="{StaticResource AnimatedButtonStyle}"/>
+                BackgroundColor="LightGreen">
+                <Button.VisualStateGroups>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightGreen" />
+                                <Setter Property="Scale" Value="1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Gray" />
+                                <Setter Property="Scale" Value="1.1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </Button.VisualStateGroups>
+            </Button>
 
             <Button Text="Add to Hand"
                 Command="{Binding AddCardToHand}"
+                WidthRequest="350"
                 HorizontalOptions="CenterAndExpand"
-                IsEnabled="{Binding EnableCardButtons}"
-                Style="{StaticResource AnimatedButtonStyle}"/>
+                BackgroundColor="LightSkyBlue"
+                IsEnabled="{Binding EnableCardButtons}">
+                <Button.VisualStateGroups>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightSkyBlue" />
+                                <Setter Property="Scale" Value="1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Gray" />
+                                <Setter Property="Scale" Value="1.1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </Button.VisualStateGroups>
+            </Button>
 
             <Button Text="Discard"
                 Command="{Binding DiscardCard}"
+                WidthRequest="350"
                 HorizontalOptions="CenterAndExpand"
-                IsEnabled="{Binding EnableCardButtons}"
-                Style="{StaticResource AnimatedButtonStyle}"/>
+                BackgroundColor="Red"
+                IsEnabled="{Binding EnableCardButtons}">
+                <Button.VisualStateGroups>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Red" />
+                                <Setter Property="Scale" Value="1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="DarkRed" />
+                                <Setter Property="Scale" Value="1.1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </Button.VisualStateGroups>
+            </Button>
 
             <Label Text="Cards in Hand:"
                    FontSize="Large"/>
@@ -66,8 +120,24 @@
                                         Command="{Binding BindingContext.DiscardCardFromHand, Source={x:Reference Page}}"
                                         CommandParameter="{Binding code}"
                                         BackgroundColor="Red"
-                                        HorizontalOptions="Fill"
-                                        Style="{StaticResource AnimatedButtonStyle}"/>
+                                        HorizontalOptions="Fill">
+                                    <Button.VisualStateGroups>
+                                        <VisualStateGroup Name="CommonStates">
+                                            <VisualState Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="Red" />
+                                                    <Setter Property="Scale" Value="1" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState Name="Pressed">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="DarkRed" />
+                                                    <Setter Property="Scale" Value="1.1" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </Button.VisualStateGroups>
+                                </Button>
 
                             </StackLayout>
 
@@ -79,3 +149,4 @@
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
+
